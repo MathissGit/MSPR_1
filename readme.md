@@ -7,6 +7,12 @@ chaque franchise et de fournir au support une vue d’ensemble fiable. L’objec
 interventions sur site, d’accélérer les diagnostics de niveau 1/2 et d’améliorer l’expérience des équipes
 locales en limitant les interruptions et les échanges itératifs.
 
+## Les objectifs 
+- Standardiser la collecte d'infos 
+- Outiller un support de consultation central 
+- Faire remonter les informations d'une frnachise sur un support de consultation
+- Accélérer les diagnostics 
+
 ## Ressources 
 
 - [Cahier des charges](/2025-2026%20CYBERXP%20-%20Sujet%20MSPR%20TPRE552.pdf)
@@ -14,8 +20,8 @@ locales en limitant les interruptions et les échanges itératifs.
 
 ## ISO des VMs
 
-- Franshise : Seahawks Harvester (in progress)
-- Datacentre : Seahawks Nester (in progress)
+- Machine "Franshise" : Seahawks Harvester (in progress)
+- Machine "Datacentre" : Seahawks Nester (in progress)
 
 ## Collaborateurs 
 

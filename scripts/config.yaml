@@ -1,0 +1,7 @@
+﻿network_range: "192.168.1.0/24"
+top_ports: [22,80,443]
+ping_target: "8.8.8.8"
+version: "0.1.0"
+reports_dir: "reports"
+logs_dir: "logs"
+inventory_file: "inventory.json"

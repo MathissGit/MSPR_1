@@ -1,0 +1,15 @@
+{
+  "10.10.10.1": {
+    "hostid": "Patriots_H1",
+    "hostname": [{"name": "patriots1.local", "type": "user"}],
+    "osmatch": {"name": "Linux 5.X"},
+    "equipements_detectes": 3,
+    "scan": {
+      "ports_ouverts": 4,
+      "ports_fermes": 1,
+      "synthese": "SSH, HTTP ouverts"
+    },
+    "latence_wan": "15 ms",
+    "version_composant": "v1.0.0"
+  }
+}

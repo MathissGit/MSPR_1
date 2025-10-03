@@ -1,0 +1,12 @@
+{
+  "name": "seahawks_monitoring",
+  "version": "1.0.0",
+  "description": "Dashboard des franchises NFL - JSON reports",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

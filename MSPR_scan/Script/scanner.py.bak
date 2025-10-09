@@ -1,0 +1,145 @@
+﻿#!/usr/bin/env python3
+"""
+scanner.py - unifié (nmap optional, fallback TCP)
+
+Usage:
+  python scanner.py --inventory inventory.json
+  python scanner.py --hosts 127.0.0.1
+  python scanner.py --cidr 192.168.1.0/24 --use-nmap
+"""
+import argparse, json, socket
+from pathlib import Path
+from datetime import datetime, timezone, timezone
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+try:
+    import nmap
+except Exception:
+    nmap = None
+
+DEFAULT_PORTS = [22, 80, 443, 139, 445, 3389, 8000, 8080]
+REPORTS_DIR = Path("reports")
+REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+
+def load_inventory(path):
+    p = Path(path)
+    if not p.exists():
+        raise FileNotFoundError(path)
+    data = json.loads(p.read_text(encoding="utf-8"))
+    if isinstance(data, dict) and "hosts" in data:
+        return data["hosts"]
+    if isinstance(data, list):
+        return data
+    raise ValueError("inventory.json must be a list or {'hosts': [...]}")
+
+def discover_with_nmap_cidr(cidr):
+    nm = nmap.PortScanner()
+    nm.scan(hosts=cidr, arguments='-sn')
+    hosts = [h for h in nm.all_hosts() if nm[h].state() == 'up']
+    return hosts
+
+def scan_ports_nmap(host, ports="1-1024"):
+    nm = nmap.PortScanner()
+    try:
+        nm.scan(hosts=host, arguments=f'-p {ports} --open -sT -Pn -T4')
+        res = []
+        if host in nm.all_hosts():
+            proto = nm[host].all_protocols()
+            for p in proto:
+                for port in nm[host][p].keys():
+                    state = nm[host][p][port]['state']
+                    res.append({"port": int(port), "state": state})
+        return res
+    except Exception:
+        return []
+
+def is_port_open_tcp(host, port, timeout=1.0):
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.settimeout(timeout)
+            s.connect((host, port))
+            return True
+    except Exception:
+        return False
+
+def scan_host_fallback(host, ports=DEFAULT_PORTS, workers=50, timeout=1.0):
+    results = []
+    with ThreadPoolExecutor(max_workers=workers) as ex:
+        futures = {ex.submit(is_port_open_tcp, host, p, timeout): p for p in ports}
+        for fut in as_completed(futures):
+            p = futures[fut]
+            try:
+                open_ = fut.result()
+            except Exception:
+                open_ = False
+            results.append({"port": p, "state": "open" if open_ else "closed"})
+    return results
+
+def summarize_report(entries):
+    up = [e for e in entries if e.get("status","up") == "up" or any(p["state"]=="open" for p in e.get("ports",[]))]
+    return {"hosts_scanned": len(entries), "hosts_up_guess": len(up)}
+
+def main():
+    ap = argparse.ArgumentParser(description="Scanner unifié (nmap optional, fallback TCP).")
+    g = ap.add_mutually_exclusive_group(required=True)
+    g.add_argument("--inventory", "-i", help="fichier inventory.json")
+    g.add_argument("--cidr", help="CIDR pour discovery (ex: 192.168.1.0/24)")
+    g.add_argument("--hosts", nargs="+", help="liste d'IP à scanner")
+    ap.add_argument("--ports", nargs="+", type=int, help="ports à scanner (fallback)", default=DEFAULT_PORTS)
+    ap.add_argument("--use-nmap", action="store_true", help="forcer utilisation de python-nmap (si installé)")
+    ap.add_argument("--timeout", type=float, default=1.0, help="timeout socket (sec)")
+    ap.add_argument("--workers", type=int, default=50, help="threads pour fallback")
+    ap.add_argument("--report-name", help="nom du fichier report (sans extension)")
+    args = ap.parse_args()
+
+    hosts = []
+    if args.inventory:
+        hosts = load_inventory(args.inventory)
+    elif args.cidr:
+        if nmap and (args.use_nmap or True):
+            try:
+                hosts = discover_with_nmap_cidr(args.cidr)
+            except Exception:
+                hosts = []
+        if not hosts:
+            base = args.cidr.rsplit('.',1)[0]
+            hosts = [f"{base}.{i}" for i in range(1,255)]
+    elif args.hosts:
+        hosts = args.hosts
+
+    hosts = sorted(set(hosts))
+    print(f"[*] Hosts to scan: {len(hosts)}")
+
+    report = {"meta": {"generated_at": datetime.utcnow().isoformat()+"Z", "source": "scanner.py"},
+              "results": []}
+
+    for h in hosts:
+        entry = {"host": h, "checked_at": datetime.utcnow().isoformat()+"Z", "ports": [], "status": "unknown"}
+        if nmap and args.use_nmap:
+            try:
+                nres = scan_ports_nmap(h, ports=",".join(str(p) for p in args.ports))
+                if nres:
+                    entry["ports"] = nres
+                    entry["status"] = "up"
+                    report["results"].append(entry)
+                    continue
+            except Exception:
+                pass
+        res = scan_host_fallback(h, ports=args.ports, workers=args.workers, timeout=args.timeout)
+        entry["ports"] = res
+        if any(p["state"]=="open" for p in res):
+            entry["status"] = "up"
+        else:
+            entry["status"] = "down-or-filtered"
+        report["results"].append(entry)
+
+    report["summary"] = summarize_report(report["results"])
+    name = args.report_name or f"report_{datetime.utcnow().strftime('%Y%m%dT%H%M%SZ')}"
+    out = REPORTS_DIR / f"{name}.json"
+    out.write_text(json.dumps(report, indent=2), encoding="utf-8")
+    print(f"[*] Report written to {out}")
+    print("Summary:", report["summary"])
+
+if __name__ == "__main__":
+    main()
+

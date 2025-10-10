@@ -4,8 +4,13 @@
 
 - Description
 - Les objectifs 
+- Stack technique 
+- Interface 
+- Transfert de fichiers entre les 
+- Liste des taches 
 - Ressources
 - ISO des VMs
+- Collaborateurs
 
 ## Description
 
@@ -27,11 +32,17 @@ Il récupère les fichier JSON de chaques franchises et les affiches dans un das
 
 ## Stack technique 
 - Linux : Debian 13
-- Hebergement : Nginx
+- Hebergement : Nginx / PM2 
 - Scripting : Python avec python-nmap
 - Dashboard : HTML / CSS / Javascript / Node.js
 
-## Liste de taches
+## Interfaces 
+Nous avons choisi de développer une interface sous forme de dashboard affichant un tableau pour les différentes franchises présentes dans les fichiers JSON. Pour la partie visuelle nous utilisons du HTML / CSS, et pour la partie logique du JavaScript qui cherche dans le dossier data les fichiers JSON stocké. 
+
+## Transfert de fichiers entre les VMs
+Nous utilisons "SCP" afin de pouvoir envoyer des fichiers de manière chiffrée en utilisant "SSH". 
+
+## Liste des taches
 - [ ] <https://github.com/MathissGit/MathissGit/issues/1>
 - [ ] <https://github.com/MathissGit/MathissGit/issues/2>
 - [ ] <https://github.com/MathissGit/MathissGit/issues/3>

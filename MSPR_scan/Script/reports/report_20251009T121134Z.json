@@ -1,0 +1,60 @@
+{
+  "meta": {
+    "generated_at": "2025-10-09T12:11:32.377735+00:00",
+    "source": "scanner.py",
+    "wan_probe": "8.8.8.8",
+    "wan_avg_rtt_ms": 153.0
+  },
+  "results": [
+    {
+      "host": "127.0.0.1",
+      "host_id": "54600cd2-1700-49c5-a6c9-93abb7537b2b",
+      "hostname": "vvs",
+      "checked_at": "2025-10-09T12:11:32.389135+00:00",
+      "ports": [
+        {
+          "port": 445,
+          "state": "open"
+        },
+        {
+          "port": 443,
+          "state": "closed"
+        },
+        {
+          "port": 22,
+          "state": "closed"
+        },
+        {
+          "port": 80,
+          "state": "closed"
+        },
+        {
+          "port": 3389,
+          "state": "closed"
+        },
+        {
+          "port": 139,
+          "state": "closed"
+        },
+        {
+          "port": 8080,
+          "state": "closed"
+        },
+        {
+          "port": 8000,
+          "state": "closed"
+        }
+      ],
+      "status": "up",
+      "open_ports_count": 1,
+      "scan_summary": "1 open / 8 scanned (tcp fallback)",
+      "avg_rtt_ms": 0.0,
+      "os": null,
+      "service_versions": []
+    }
+  ],
+  "summary": {
+    "hosts_scanned": 1,
+    "hosts_up_guess": 1
+  }
+}

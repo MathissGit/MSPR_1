@@ -78,13 +78,6 @@ sudo apt install -y nmap
 pip install python-nmap
 ```
 
-### CentOS/RHEL
-
-```bash
-sudo yum install -y nmap
-pip install python-nmap
-```
-
 ### Windows
 
 1. Télécharger l’installeur depuis le site officiel de Nmap et installer.
@@ -289,4 +282,5 @@ git add scripts/scanner.py
 git commit -m "feat: tweak scanner"
 git push -u origin feat/tweak-scanner
 ```
+
 

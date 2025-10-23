@@ -13,7 +13,7 @@
 
    * [Windows (PowerShell)](#windows-powershell)
    * [Linux (Debian/Ubuntu)](#linux-debianubuntu)
-   * [macOS](#macos)
+
 4. [Installer Nmap & `python-nmap` (optionnel, recommandé)](#installer-nmap--python-nmap-optionnel-recommandé)
 5. [Installer les dépendances Python](#installer-les-dépendances-python)
 6. [Utilisation : commandes exemples](#utilisation--commandes-exemples)
@@ -68,18 +68,6 @@ pip install --upgrade pip
 pip install -r scripts/requirements.txt
 ```
 
-### macOS
-
-```bash
-cd ~/chemin/vers/repo
-python3 -m venv .venv
-source .venv/bin/activate
-pip install --upgrade pip
-pip install -r scripts/requirements.txt
-```
-
----
-
 ## Installer Nmap & `python-nmap` (optionnel, recommandé)
 
 ### Debian/Ubuntu
@@ -94,13 +82,6 @@ pip install python-nmap
 
 ```bash
 sudo yum install -y nmap
-pip install python-nmap
-```
-
-### macOS (Homebrew)
-
-```bash
-brew install nmap
 pip install python-nmap
 ```
 
@@ -308,3 +289,4 @@ git add scripts/scanner.py
 git commit -m "feat: tweak scanner"
 git push -u origin feat/tweak-scanner
 ```
+

@@ -1,4 +1,4 @@
-﻿# MSPR_scan — Scanner réseau (ton travail)
+﻿# MSPR_scan — Scanner réseau 
 
 Structure:
 - scripts/scanner.py : script unifié (discovery + fallback TCP)
@@ -12,3 +12,4 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt   # optionnel ; fallback TCP fonctionne sans nmap
 python scanner.py --inventory inventory.json
+

@@ -1,4 +1,7 @@
 ﻿#!/usr/bin/env python3
+# version SemVer du script
+__version__ = "0.1.0"
+
 """
 scanner.py - unifié (nmap optional, fallback TCP)
 
@@ -173,6 +176,7 @@ def main():
         "meta": {
             "generated_at": datetime.now(timezone.utc).isoformat(),
             "source": "scanner.py",
+            "tool_version": __version__,
             "wan_probe": wan_probe,
             "wan_avg_rtt_ms": meta_wan_rtt
         },
@@ -234,3 +238,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

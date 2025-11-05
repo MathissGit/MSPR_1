@@ -3,24 +3,24 @@
 ---
 
 ## Sommaire
-1. Résumé rapide  
-2. Prérequis  
-3. Installation (rapide)  
-   - Windows (PowerShell)  
-   - Linux / macOS  
-4. Installer Nmap (optionnel)  
-5. Quickstart — test de fonctionnement  
-6. Commandes d’utilisation — exemples  
-7. Options utiles (CLI)  
-8. Vérifier les rapports (validation)  
-9. Versioning minimal (procédure simple)  
-10. Automatisation simple (cron / systemd)  
-11. Upload post-run (optionnel)  
-12. `.gitignore` recommandé  
-13. Nettoyage des backups committés  
-14. Dépannage rapide  
-15. Checklist avant PR / livraison  
-16. Notes sécurité & bonnes pratiques  
+1- [Résumé rapide](#résumé-rapide)  
+2- [Prérequis](#prérequis)  
+3- [Installation (rapide)](#installation-rapide)  
+  - [Windows (PowerShell)](#windows-powershell)  
+  - [Linux / macOS](#linux--macos)  
+4- [Installer Nmap (optionnel)](#installer-nmap-optionnel)  
+5- [Quickstart — test de fonctionnement](#quickstart--test-de-fonctionnement)  
+6- [Commandes d’utilisation — exemples](#commandes-dutilisation--exemples)  
+7- [Options utiles (CLI)](#options-utiles-cli)  
+8- [Vérifier les rapports (validation)](#vérifier-les-rapports-validation)  
+9- [Versioning minimal (procédure simple)](#versioning-minimal-procédure-simple)  
+10- [Automatisation simple (cron / systemd)](#automatisation-simple-cron--systemd)  
+11- [Upload post-run (optionnel)](#upload-post-run-optionnel)  
+12- [`.gitignore` recommandé](#gitignore-recommandé)  
+13- [Nettoyage des backups committés](#nettoyage-des-backups-committés)  
+14- [Dépannage rapide](#dépannage-rapide)  
+15- [Checklist avant PR / livraison](#checklist-avant-pr--livraison)  
+16- [Notes sécurité & bonnes pratiques](#notes-sécurité--bonnes-pratiques)  
 
 ---
 
